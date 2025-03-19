@@ -7,7 +7,7 @@ void generateBinaryStrings(int n, std::string str) {
         return;
     }
 
-    for (char c = '0'; c <= '1'; c++) {
+    for (char c : "01") {
         str += c;
         generateBinaryStrings(n - 1, str);
         str.pop_back();
