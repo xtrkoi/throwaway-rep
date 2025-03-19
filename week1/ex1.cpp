@@ -15,8 +15,10 @@ long long fibonacci(int n) {
 }
 
 int main() {
-    fibonacci(5);
-    for (int i = 0; i < 5; i++)
+    int n;
+    std::cin >> n;
+    fibonacci(n);
+    for (int i = 0; i < n; i++)
         std::cout << f[i] << ' ';
     return 0;
 }

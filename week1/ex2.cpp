@@ -7,5 +7,8 @@ long long factorial(int n) {
 }
 
 int main() {
-    std::cout << factorial(5) << std::endl;
+    int n;
+    std::cin >> n;
+    std::cout << factorial(n) << std::endl;
+    return 0;
 }
