@@ -14,4 +14,5 @@ int main() {
     int n;
     std::cin >> n;
     towers_of_hanoi_solver(n, 0, 2, 1);
+    return 0;
 }
