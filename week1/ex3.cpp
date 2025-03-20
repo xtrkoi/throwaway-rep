@@ -1,7 +1,11 @@
+// A program that generates all binary strings in increasing order
 #include <iostream>
 #include <string>
 
-void generateBinaryStrings(int n, std::string str) {
+/// @brief Generate binary strings of length n
+/// @param n The length of the binary strings
+/// @param str Temporary variable that holds the string
+void generateBinaryStrings(int n, std::string str = "") {
     if (n == 0) {
         std::cout << str << '\n';
         return;
@@ -17,6 +21,6 @@ void generateBinaryStrings(int n, std::string str) {
 int main() {
     int n;
     std::cin >> n;
-    generateBinaryStrings(n, "");
+    generateBinaryStrings(n);
     return 0;
 }

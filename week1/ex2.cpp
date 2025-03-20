@@ -1,5 +1,9 @@
+// A program that finds the n factorial (n!)
 #include <iostream>
 
+/// @brief Find n factorial (n!)
+/// @param n 
+/// @return n factorial (n!)
 long long factorial(int n) {
     if (n == 0)
         return 1;

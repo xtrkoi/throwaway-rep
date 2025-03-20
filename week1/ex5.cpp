@@ -1,5 +1,10 @@
+// A program that verify if an array is sorted ascendingly
 #include <iostream>
 
+/// @brief Verify if an array is sorted with recursion
+/// @param a array pointer
+/// @param n length of array
+/// @return True if array is sorted, False otherwise
 bool is_sorted(int a[], int n) {
     if (n <= 1)
         return true;
