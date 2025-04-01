@@ -1,5 +1,9 @@
 #include <iostream>
 
+/// @brief Find the minimum integer in a rotated array with unique elements
+/// @param a A pointer to the array. The array must contain unique elements and be sorted before rotated.
+/// @param n Number of integers allocated by the array
+/// @return The index `i` where `a[i]` is the smallest integer in the array
 int find_min_rotated(int a[], int n) {
     int left = 0, right = n - 1;
     int first_position = -1;
@@ -23,6 +27,6 @@ int main() {
 
     
     std::cout << a[find_min_rotated(a, n)] << '\n';
-    
+
     return 0;
 }

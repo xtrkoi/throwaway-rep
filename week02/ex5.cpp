@@ -1,5 +1,10 @@
 #include <iostream>
 
+/// @brief Finds the length of the shortest subarray with sum greater than or equal to the given sum, using binary search
+/// @param nums A pointer to the array of integers, sorted ascendingly
+/// @param n The number of integers in the array
+/// @param target The target sum
+/// @return The length of the sortest subarray, `0` if none is found
 int shortest_subarray(int nums[], int n, long long target) {
     long long partial_sum_array[n];
     partial_sum_array[0] = nums[0];
@@ -29,6 +34,11 @@ int shortest_subarray(int nums[], int n, long long target) {
     return (min_length <= n ? min_length : 0);
 }
 
+/// @brief An implementation using two-pointer method
+/// @param nums A pointer to the array of integers, sorted ascendingly
+/// @param n The number of integers in the array
+/// @param target The target sum
+/// @return The length of the sortest subarray, `0` if none is found
 int shortest_subarray_two_ptr(int nums[], int n, long long target) {
     long long current_sum = 0;
     int min_length = n + 1;
