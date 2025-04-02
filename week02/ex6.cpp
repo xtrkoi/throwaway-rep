@@ -15,9 +15,9 @@ int binary_search(int a[], int n, int k, int l_bound, int r_bound) {
             return mid;
 
         if (a[mid] < k)
-            right = mid - 1;
-        else
             left = mid + 1;
+        else
+            right = mid - 1;
     }
     return -1;
 }

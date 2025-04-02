@@ -34,9 +34,9 @@ int binary_search(int a[], int n, int k, int l_bound, int r_bound) {
             return mid;
 
         if (a[mid] < k)
-            right = mid - 1;
-        else
             left = mid + 1;
+        else
+            right = mid - 1;
     }
     return -1;
 }
@@ -46,22 +46,22 @@ int binary_search(int a[], int n, int k, int l_bound, int r_bound) {
 /// @param n The number of integers in the array
 void find_all_zero_sum_triplets(int nums[], int n) {
     sort_insertion(nums, n);
-    for (int i = 0; i < n; i++)
-        std::cout << nums[i] << " \n"[i == n - 1];
-    for (int i = 1; i < n - 1; i++) {
-        if (i + 1 < n - 1 && nums[i] == nums[i + 1])
-            continue;
-        
+
+    for (int i = 1; i < n - 1; i++)
         for (int j = 0; j < i; j++) {
-            if (j + 1 < i && nums[j] == nums[j + 1])
-                continue;
-            
-            int k = binary_search(nums, n, -nums[i] - nums[j], i + 1, n - 1);
+            int k = binary_search(nums, n, -(nums[i] + nums[j]), i + 1, n - 1);
+
             if (k != -1) {
                 std::cout << '{' << nums[j] << ", " << nums[i] << ", " << nums[k] << "}\n";
+
+                if (nums[j] == nums[i])
+                    break;
+
+                int v = nums[j];
+                while (j + 1 < i && v == nums[j + 1])
+                    j++;
             }
         }
-    }
 }
 
 int main() {
