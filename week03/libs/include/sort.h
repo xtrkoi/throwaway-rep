@@ -1,7 +1,9 @@
 // sort.h
-
 #ifndef SORT_H
 #define SORT_H
+
+const int algo_names_len = 13;
+extern const char * algo_names[algo_names_len];
 
 namespace sort {
     long long bubble_sort(int *__first, int *__last);

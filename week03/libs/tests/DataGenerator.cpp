@@ -5,6 +5,9 @@
 #include <time.h>
 using namespace std;
 
+const int data_sizes[] = { 10'000, 30'00, 50'000, 100'000, 500'000 };
+const char * data_props[] = { "random", "sorted", "reversed", "nearly", "repeated" };
+
 //-------------------------------------------------
 // Random number generator
 

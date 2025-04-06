@@ -1,11 +1,11 @@
+// sorter.cpp
 #include "libs/include/sort.h"
+
 #include <algorithm>
 #include <iostream>
 #include <cstring>
 #include <ctime>
 #include <chrono>
-#include <string>
-#include <vector>
 #include <iomanip>
 
 bool is_option_flag(const char *s) {
@@ -38,22 +38,6 @@ long long std_sort(int *__first, int *__last) {
     return comparisons;
 }
 
-std::vector<std::string> algo_names = {
-    "std-sort",
-    "bubble-sort",
-    "selection-sort",
-    "insertion-sort",
-    "merge-sort",
-    "merge-sort-iter",
-    "heap-sort",
-    "quick-sort",
-    "radix-sort",
-    "shell-sort",
-    "shaker-sort",
-    "counting-sort",
-    "flash-sort",
-};
-
 long long (*sort_algos[])(int *, int *) = {
     std_sort,
     sort::bubble_sort,
@@ -70,9 +54,9 @@ long long (*sort_algos[])(int *, int *) = {
     sort::flash_sort,
 };
 
-int get_sort_algo_id(const std::string &s) {
-    for (int i = 0; i < (int)algo_names.size(); i++)
-        if (algo_names[i] == s)
+int get_sort_algo_id(const char * s) {
+    for (int i = 0; i < (int)algo_names_len; i++)
+        if (strcmp(algo_names[i], s) == 0)
             return i;
     return -1;
 }
@@ -82,7 +66,7 @@ int main(int argc, char const *argv[]) {
     std::cin.tie(nullptr);
 
     long long (*sort_algo)(int *, int *) = std_sort;
-    std::string sort_algo_name = "std-sort";
+    char sort_algo_name[] = "std-sort";
 
     int arg_selector = 1;
 
@@ -121,7 +105,8 @@ int main(int argc, char const *argv[]) {
             }
             _a = true;
 
-            sort_algo_name = argv[arg_selector + 1];
+            // sort_algo_name = argv[arg_selector + 1];
+            strcpy(sort_algo_name, argv[arg_selector + 1]);
             int sort_algo_id = get_sort_algo_id(sort_algo_name);
 
             if (sort_algo_id == -1) {
@@ -198,7 +183,7 @@ int main(int argc, char const *argv[]) {
     #define WRITE_TO_LOG 1
     #ifdef WRITE_TO_LOG
     
-    freopen("sorter_log.log", "a", stderr);
+    freopen("logs/sorter_log.log", "a", stderr);
 
     std::cerr << '\n';
     std::cerr << " * sorter.exe executed at " << std::ctime(&end_time) << '\n';

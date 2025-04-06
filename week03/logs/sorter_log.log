@@ -246,3 +246,165 @@ Number of comparisons: 500000
 Sorting algorithm used: heap-sort
 Elapsed time: 0.129439 (seconds)
 Number of comparisons: 17396850
+
+ * sorter.exe executed at Thu Apr  3 22:14:08 2025
+
+Sorting algorithm used: counting-sort
+Elapsed time: 0.015280 (seconds)
+Number of comparisons: 1000000
+
+ * sorter.exe executed at Fri Apr  4 22:10:13 2025
+
+Sorting algorithm used: merge-sort
+Elapsed time: 0.034308 (seconds)
+Number of comparisons: 4692496
+
+ * sorter.exe executed at Fri Apr  4 22:29:43 2025
+
+Sorting algorithm used: merge-sort
+Elapsed time: 0.091962 (seconds)
+Number of comparisons: 4692496
+
+ * sorter.exe executed at Fri Apr  4 22:30:11 2025
+
+Sorting algorithm used: quick-sort
+Elapsed time: 0.097989 (seconds)
+Number of comparisons: 171043578
+
+ * sorter.exe executed at Fri Apr  4 22:31:55 2025
+
+Sorting algorithm used: flash-sort
+Elapsed time: 0.000218 (seconds)
+Number of comparisons: 51000
+
+ * sorter.exe executed at Fri Apr  4 22:32:18 2025
+
+Sorting algorithm used: flash-sort
+Elapsed time: 0.001839 (seconds)
+Number of comparisons: 510000
+
+ * sorter.exe executed at Fri Apr  4 22:32:31 2025
+
+Sorting algorithm used: flash-sort
+Elapsed time: 0.005629 (seconds)
+Number of comparisons: 1275000
+
+ * sorter.exe executed at Fri Apr  4 22:32:40 2025
+
+Sorting algorithm used: merge-sort
+Elapsed time: 0.068112 (seconds)
+Number of comparisons: 4692496
+
+ * sorter.exe executed at Fri Apr  4 22:32:48 2025
+
+Sorting algorithm used: shell-sort
+Elapsed time: 0.011139 (seconds)
+Number of comparisons: 5601426
+
+ * sorter.exe executed at Fri Apr  4 22:32:59 2025
+
+Sorting algorithm used: counting-sort
+Elapsed time: 0.003048 (seconds)
+Number of comparisons: 1000000
+
+ * sorter.exe executed at Fri Apr  4 22:33:38 2025
+
+Sorting algorithm used: radix-sort
+Elapsed time: 0.037187 (seconds)
+Number of comparisons: 500000
+
+ * sorter.exe executed at Fri Apr  4 22:33:52 2025
+
+Sorting algorithm used: insertion-sort
+Elapsed time: 0.000441 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Fri Apr  4 22:34:02 2025
+
+Sorting algorithm used: bubble-sort
+Elapsed time: 0.000805 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Fri Apr  4 22:38:07 2025
+
+Sorting algorithm used: shaker-sort
+Elapsed time: 0.001052 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Fri Apr  4 22:38:24 2025
+
+Sorting algorithm used: heap-sort
+Elapsed time: 0.063689 (seconds)
+Number of comparisons: 17837785
+
+ * sorter.exe executed at Sun Apr  6 10:09:47 2025
+
+Sorting algorithm used: std-sort
+Elapsed time: 0.003936 (seconds)
+Number of comparisons: 12052411
+
+ * sorter.exe executed at Sun Apr  6 10:10:00 2025
+
+Sorting algorithm used: bubble-sort
+Elapsed time: 0.000372 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Sun Apr  6 10:15:11 2025
+
+Sorting algorithm used: selection-sort
+Elapsed time: 297.049607 (seconds)
+Number of comparisons: 124999750000
+
+ * sorter.exe executed at Sun Apr  6 10:15:31 2025
+
+Sorting algorithm used: insertion-sort
+Elapsed time: 0.000241 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Sun Apr  6 10:15:38 2025
+
+Sorting algorithm used: heap-sort
+Elapsed time: 0.042475 (seconds)
+Number of comparisons: 17837785
+
+ * sorter.exe executed at Sun Apr  6 10:15:46 2025
+
+Sorting algorithm used: merge-sort
+Elapsed time: 0.049547 (seconds)
+Number of comparisons: 4692496
+
+ * sorter.exe executed at Sun Apr  6 10:15:52 2025
+
+Sorting algorithm used: merge-sort-iter
+Elapsed time: 0.006624 (seconds)
+Number of comparisons: 4797776
+
+ * sorter.exe executed at Sun Apr  6 10:16:03 2025
+
+Sorting algorithm used: shell-sort
+Elapsed time: 0.008261 (seconds)
+Number of comparisons: 5601426
+
+ * sorter.exe executed at Sun Apr  6 10:16:10 2025
+
+Sorting algorithm used: shaker-sort
+Elapsed time: 0.000304 (seconds)
+Number of comparisons: 499999
+
+ * sorter.exe executed at Sun Apr  6 10:16:17 2025
+
+Sorting algorithm used: flash-sort
+Elapsed time: 0.002219 (seconds)
+Number of comparisons: 1275000
+
+ * sorter.exe executed at Sun Apr  6 10:16:26 2025
+
+Sorting algorithm used: radix-sort
+Elapsed time: 0.015908 (seconds)
+Number of comparisons: 500000
+
+ * sorter.exe executed at Sun Apr  6 10:16:35 2025
+
+Sorting algorithm used: counting-sort
+Elapsed time: 0.002555 (seconds)
+Number of comparisons: 1000000

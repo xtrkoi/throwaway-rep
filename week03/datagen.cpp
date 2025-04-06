@@ -1,4 +1,4 @@
-#include "DataGenerator.h"
+#include "libs/tests/DataGenerator.h"
 
 #include <iostream>
 #include <cstring>
@@ -10,6 +10,13 @@ bool is_option_flag(const char *s) {
 
 void display_unrecognized_command_error(const char *s) {
     std::cerr << "'" << s << "'" << " isn't a recognized option.";
+}
+
+int get_data_type_id(const char * s) {
+    for (int i = 0; i < (int)num_data_props; i++)
+        if (strcmp(data_props[i], s) == 0)
+            return i;
+    return -1;
 }
 
 int main(int argc, char const *argv[]) {
@@ -55,7 +62,7 @@ int main(int argc, char const *argv[]) {
             }
             _t = true;
 
-            set_data_property(std::stoi(argv[arg_selector + 1]));
+            set_data_property(get_data_type_id(argv[arg_selector + 1]));
 
             arg_selector += 2;
         }

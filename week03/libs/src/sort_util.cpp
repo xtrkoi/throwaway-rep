@@ -47,7 +47,17 @@ namespace sort_util {
     long long partition(int *__first, int *__last, int **__pivot) {
         long long comparisons = 0;
 
-        *__pivot = __last - 1;
+        // Median-of-three
+        int *__left = __first;
+        int *__mid = __first + sort_util::distance(__first, __last) / 2;
+        int *__right = __last - 1;
+
+        if (++comparisons, *__mid > *__left) sort_util::swap_int(*__left, *__mid);
+        if (++comparisons, *__right > *__mid) sort_util::swap_int(*__mid, *__right);
+        if (++comparisons, *__mid > *__left) sort_util::swap_int(*__left, *__mid);
+
+        sort_util::swap_int(*__mid, *__right);
+        *__pivot = __right;
         int *__partitionIndex = __first;
 
         for (int *i = __first; i != __last; ++i) {

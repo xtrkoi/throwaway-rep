@@ -1,6 +1,22 @@
 #include "../include/sort.h"
 #include "../include/sort_util.h"
 
+const char * algo_names[algo_names_len] = {
+    "std-sort",
+    "bubble-sort",
+    "selection-sort",
+    "insertion-sort",
+    "merge-sort",
+    "merge-sort-iter",
+    "heap-sort",
+    "quick-sort",
+    "radix-sort",
+    "shell-sort",
+    "shaker-sort",
+    "counting-sort",
+    "flash-sort",
+};
+
 namespace sort {
     long long bubble_sort(int *__first, int *__last) {
         if (__first == __last)
@@ -120,13 +136,23 @@ namespace sort {
         if (__first == __last)
             return 0;
 
+        // Hybrid
+        if (sort_util::distance(__first, __last) <= 8)
+            return sort::selection_sort(__first, __last);
+
         long long comparisons = 0;
                 
         int *p = nullptr;
         comparisons += sort_util::partition(__first, __last, &p);
         
-        quick_sort(__first, p);
-        quick_sort(++p, __last);
+        // Tail recursion
+        if (sort_util::distance(__first, p) < sort_util::distance(p, __last)) {
+            comparisons += quick_sort(__first, p);
+            comparisons += quick_sort(p + 1, __last);
+        } else {
+            comparisons += quick_sort(p + 1, __last);
+            comparisons += quick_sort(__first, p);
+        }
 
         return comparisons;
     }
@@ -182,8 +208,8 @@ namespace sort {
         long long comparisons = 0;
 
         while (__first < __last) {
-            int *__n_first = __first;
-            int *__n_last = __last;
+            int *__n_first = __last;
+            int *__n_last = __first;
 
             for (int *i = __first; sort_util::distance(i, __last) > 1; ++i) {
                 if (++comparisons, *(i + 1) < *i) {
@@ -283,7 +309,7 @@ namespace sort {
         auto arrange_bucket = [&__first, &get_bucket_id, &find_swap_index](int l, int r, int v) -> void {
             for (int i = l; i < r; i++) {
                 int __bucket_id = get_bucket_id(*(__first + i));
-                while (__bucket_id != i) {
+                while (__bucket_id != v) {
                     int swap_index = find_swap_index(__bucket_id);
                     sort_util::swap_int(*(__first + i), *(__first + swap_index));
                     __bucket_id = get_bucket_id(*(__first + i));
