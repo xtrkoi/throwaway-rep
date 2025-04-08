@@ -17,6 +17,22 @@ const char * algo_names[algo_names_len] = {
     "flash-sort",
 };
 
+const bool is_quadratic[algo_names_len] = {
+    false,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+};
+
 namespace sort {
     long long bubble_sort(int *__first, int *__last) {
         if (__first == __last)
@@ -218,7 +234,7 @@ namespace sort {
                 }
             }
             
-            __last = --__n_last;
+            __last = __n_last;
             for (int *i = __last; sort_util::distance(__first, i) > 1; --i) {
                 if (++comparisons, *(i - 1) < *(i - 2)) {
                     sort_util::swap_int(*(i - 2), *(i - 1));

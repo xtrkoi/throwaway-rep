@@ -39,7 +39,7 @@ namespace sort_util {
         return comparisons;
     }
 
-    /// @brief Lomuto partitioning
+    /// @brief Middle pivot partition
     /// @param __first An iterator
     /// @param __last Another iterator
     /// @param __pivot Address of a pointer
@@ -47,17 +47,9 @@ namespace sort_util {
     long long partition(int *__first, int *__last, int **__pivot) {
         long long comparisons = 0;
 
-        // Median-of-three
-        int *__left = __first;
-        int *__mid = __first + sort_util::distance(__first, __last) / 2;
-        int *__right = __last - 1;
-
-        if (++comparisons, *__mid > *__left) sort_util::swap_int(*__left, *__mid);
-        if (++comparisons, *__right > *__mid) sort_util::swap_int(*__mid, *__right);
-        if (++comparisons, *__mid > *__left) sort_util::swap_int(*__left, *__mid);
-
-        sort_util::swap_int(*__mid, *__right);
-        *__pivot = __right;
+        int __len = sort_util::distance(__first, __last);
+        sort_util::swap_int(*(__last - 1), *(__first + __len / 2));
+        *__pivot = __last - 1;
         int *__partitionIndex = __first;
 
         for (int *i = __first; i != __last; ++i) {
@@ -68,6 +60,10 @@ namespace sort_util {
         }
 
         sort_util::swap_int(**__pivot, *__partitionIndex);
+        while (sort_util::distance(__first, __partitionIndex) < __len / 2 && (++comparisons, *__partitionIndex == *(__partitionIndex + 1)))
+            ++__partitionIndex;
+        while (sort_util::distance(__first, __partitionIndex) > __len / 2 && (++comparisons, *__partitionIndex == *(__partitionIndex - 1)))
+            --__partitionIndex;
         *__pivot = __partitionIndex;
 
         return comparisons;

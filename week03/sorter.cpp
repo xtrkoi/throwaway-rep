@@ -3,10 +3,12 @@
 
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <cstring>
 #include <ctime>
 #include <chrono>
 #include <iomanip>
+#include <string>
 
 bool is_option_flag(const char *s) {
     return strlen(s) > 0 && s[0] == '-';
@@ -62,17 +64,19 @@ int get_sort_algo_id(const char * s) {
 }
 
 int main(int argc, char const *argv[]) {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(nullptr);
+    // std::ios_base::sync_with_stdio(false);
+    // std::cin.tie(nullptr);
 
     long long (*sort_algo)(int *, int *) = std_sort;
-    char sort_algo_name[] = "std-sort";
+    std::string sort_algo_name = "std-sort";
 
     int arg_selector = 1;
 
     bool _a = false;
     bool _i = false;
     bool _o = false;
+    bool _tmp = false;
+    char * tmp_output = nullptr;
 
     // for (int i = 0; i < argc; i++)
     //     std::cout << argv[i] << '\n';
@@ -106,8 +110,9 @@ int main(int argc, char const *argv[]) {
             _a = true;
 
             // sort_algo_name = argv[arg_selector + 1];
-            strcpy(sort_algo_name, argv[arg_selector + 1]);
-            int sort_algo_id = get_sort_algo_id(sort_algo_name);
+            // strcpy(sort_algo_name, argv[arg_selector + 1]);
+            sort_algo_name = argv[arg_selector + 1];
+            int sort_algo_id = get_sort_algo_id(sort_algo_name.c_str());
 
             if (sort_algo_id == -1) {
                 std::cerr << "Error '-a': " << sort_algo_name << " isn't a recognized sorting algorithm.";
@@ -151,6 +156,20 @@ int main(int argc, char const *argv[]) {
             arg_selector += 2;
         }
 
+        // Output time and comparisons into a temp-file
+        else if (strcmp(argv[arg_selector], "-tmp") == 0) {
+            if (_tmp) {
+                std::cerr << "Duplicate option: '-tmp'";
+                return EXIT_FAILURE;
+            }
+            _tmp = true;
+
+            tmp_output = new char[strlen(argv[arg_selector + 1])];
+            strcpy(tmp_output, argv[arg_selector + 1]);
+
+            arg_selector += 2;
+        }
+
         else {
             display_unrecognized_command_error(argv[arg_selector]);
             return EXIT_FAILURE;
@@ -169,11 +188,19 @@ int main(int argc, char const *argv[]) {
 
     auto end = std::chrono::system_clock::now();
 
-    std::chrono::duration<double> elapsed_seconds = end - start;
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
 
     for (int i = 0; i < n; i++)
-        std::cout << a[i] << ' ';
+        std::cout << a[i] << '\n';
+
+    if (_tmp) {
+        std::ofstream otmp(tmp_output);
+        if (otmp.is_open()) {
+            otmp << elapsed << ' ' << num_of_ops << '\n';
+            otmp.close();
+        }
+    }
 
     if (_i)
         std::fclose(stdin);
@@ -188,7 +215,7 @@ int main(int argc, char const *argv[]) {
     std::cerr << '\n';
     std::cerr << " * sorter.exe executed at " << std::ctime(&end_time) << '\n';
     std::cerr << "Sorting algorithm used: " << sort_algo_name << '\n';
-    std::cerr << "Elapsed time: " << std::fixed << std::setprecision(6) << elapsed_seconds.count() << " (seconds)\n";
+    std::cerr << "Elapsed time: " << elapsed << " (miliseconds)\n";
     std::cerr << "Number of comparisons: " << num_of_ops << std::endl;
 
     std::fclose(stderr);

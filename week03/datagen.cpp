@@ -19,6 +19,8 @@ int get_data_type_id(const char * s) {
     return -1;
 }
 
+int seq[5000001];
+
 int main(int argc, char const *argv[]) {
 
     int data_size = 100;
@@ -89,7 +91,7 @@ int main(int argc, char const *argv[]) {
         }
     }
     
-    int seq[data_size] = {};
+    // int seq[data_size];
     GenerateData(seq, data_size, data_property);
 
     // std::ios_base::sync_with_stdio(false);

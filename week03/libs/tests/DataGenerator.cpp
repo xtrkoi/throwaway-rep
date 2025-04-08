@@ -5,7 +5,7 @@
 #include <time.h>
 using namespace std;
 
-const int data_sizes[] = { 10'000, 30'00, 50'000, 100'000, 500'000 };
+const int data_sizes[] = { 10'000, 30'000, 50'000, 100'000, 200'000, 500'000, 1'000'000, 2'000'000, 5'000'000};
 const char * data_props[] = { "random", "sorted", "reversed", "nearly", "repeated" };
 
 //-------------------------------------------------
@@ -95,7 +95,7 @@ void GenerateNearlySortedData(int a[], int n)
 // Ham phat sinh mang du lieu gom nhieu du lieu trung nhau
 void GenerateFewDistinctData(int a[], int n)
 {
-	int num_of_unique_values = (int)ceil(pow((double)n, 0.9));
+	int num_of_unique_values = max(1, (int)(pow((double)n, 0.2)));
 	assert(num_of_unique_values > 0);
 
 	std::uniform_int_distribution<int> rand_int(0, n - 1);
