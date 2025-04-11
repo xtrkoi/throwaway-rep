@@ -1,8 +1,9 @@
-#include "libs/tests/DataGenerator.h"
+#include "../libs/tests/DataGenerator.h"
 
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <cstdlib>
 
 bool is_option_flag(const char *s) {
     return strlen(s) > 0 && s[0] == '-';
@@ -19,7 +20,7 @@ int get_data_type_id(const char * s) {
     return -1;
 }
 
-int seq[5000001];
+int *seq = new int[20'000'001];
 
 int main(int argc, char const *argv[]) {
 
@@ -104,6 +105,8 @@ int main(int argc, char const *argv[]) {
     
     if (_o)
         std::fclose(stdout);
+
+    delete[] seq;
 
     return 0;
 }

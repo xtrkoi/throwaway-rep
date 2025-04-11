@@ -1,5 +1,5 @@
 // sorter.cpp
-#include "libs/include/sort.h"
+#include "../libs/include/sort.h"
 
 #include <algorithm>
 #include <iostream>
@@ -62,6 +62,8 @@ int get_sort_algo_id(const char * s) {
             return i;
     return -1;
 }
+
+int *a = new int[20'000'001];
 
 int main(int argc, char const *argv[]) {
     // std::ios_base::sync_with_stdio(false);
@@ -178,7 +180,6 @@ int main(int argc, char const *argv[]) {
 
     int n;
     std::cin >> n;
-    int a[n];
     for (int i = 0; i < n; i++)
         std::cin >> a[i];
     
@@ -221,6 +222,8 @@ int main(int argc, char const *argv[]) {
     std::fclose(stderr);
 
     #endif
+
+    delete[] a;
 
     return 0;
 }

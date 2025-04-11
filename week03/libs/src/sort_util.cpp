@@ -52,7 +52,7 @@ namespace sort_util {
         *__pivot = __last - 1;
         int *__partitionIndex = __first;
 
-        for (int *i = __first; i != __last; ++i) {
+        for (int *i = __first; (++comparisons, i != __last); ++i) {
             if (++comparisons, *i < **__pivot) {
                 sort_util::swap_int(*i, *__partitionIndex);
                 ++__partitionIndex;
@@ -60,9 +60,9 @@ namespace sort_util {
         }
 
         sort_util::swap_int(**__pivot, *__partitionIndex);
-        while (sort_util::distance(__first, __partitionIndex) < __len / 2 && (++comparisons, *__partitionIndex == *(__partitionIndex + 1)))
+        while ((++comparisons, sort_util::distance(__first, __partitionIndex) < __len / 2) && (++comparisons, *__partitionIndex == *(__partitionIndex + 1)))
             ++__partitionIndex;
-        while (sort_util::distance(__first, __partitionIndex) > __len / 2 && (++comparisons, *__partitionIndex == *(__partitionIndex - 1)))
+        while ((++comparisons, sort_util::distance(__first, __partitionIndex) > __len / 2) && (++comparisons, *__partitionIndex == *(__partitionIndex - 1)))
             --__partitionIndex;
         *__pivot = __partitionIndex;
 
@@ -77,12 +77,12 @@ namespace sort_util {
             int __rightChild = __nodeIndex * 2 + 2;
             int __largerNode = __nodeIndex;
 
-            if (__leftChild < __len && (++comparisons, __first[__leftChild] > __first[__largerNode]))
+            if ((++comparisons, __leftChild < __len) && (++comparisons, __first[__leftChild] > __first[__largerNode]))
                 __largerNode = __leftChild;
-            if (__rightChild < __len && (++comparisons, __first[__rightChild] > __first[__largerNode]))
+            if ((++comparisons, __rightChild < __len) && (++comparisons, __first[__rightChild] > __first[__largerNode]))
                 __largerNode = __rightChild;
             
-            if (__largerNode == __nodeIndex)
+            if (++comparisons, __largerNode == __nodeIndex)
                 break;
 
             sort_util::swap_int(__first[__nodeIndex], __first[__largerNode]);
@@ -95,7 +95,7 @@ namespace sort_util {
     long long __pop_heap(int *__first, int *__last) {
         long long comparisons = 0;
 
-        if (__first == __last)
+        if (++comparisons, __first == __last)
             return 0;
 
         sort_util::swap_int(*__first, *(__last - 1));
@@ -109,25 +109,27 @@ namespace sort_util {
         long long comparisons = 0;
         int __len = sort_util::distance(__first, __last);
 
-        for (int __nodeIndex = (__len - 2) / 2; __nodeIndex >= 0; --__nodeIndex)
+        for (int __nodeIndex = (__len - 2) / 2; (++comparisons, __nodeIndex >= 0); --__nodeIndex)
             comparisons += sort_util::__down_heap(__first, __nodeIndex, __len);
 
         return comparisons;
     }
 
     long long __r_counting_sort(int *__first, int *__last, int _digit_place) {
+        long long comparisons = 0;
+
         const int BASE = 10;
         int _v_count[BASE] = {};
 
-        for (int *i = __first; i != __last; ++i)
+        for (int *i = __first; (++comparisons, i != __last); ++i)
             _v_count[*i / _digit_place % 10]++;
 
-        for (int i = 1; i < BASE; i++)
+        for (int i = 1; (++comparisons, i < BASE); i++)
             _v_count[i] += _v_count[i - 1];
 
         int *aux = new int[sort_util::distance(__first, __last)];
 
-        for (int *i = __last; i != __first; --i) {
+        for (int *i = __last; (++comparisons, i != __first); --i) {
             aux[_v_count[*(i - 1) / _digit_place % 10] - 1] = *(i - 1);
             _v_count[*(i - 1) / _digit_place % 10]--;
         }
