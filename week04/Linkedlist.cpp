@@ -13,13 +13,37 @@ struct List
     List(NODE *head = nullptr, NODE *tail = nullptr) : p_head(head), p_tail(tail) {}
 };
 
+/**************** Auxiliary functions ****************/
+
+/// @returns pointer to the next node indicated, `nullptr` if none available
+NODE *succ(List *&L, NODE *p_node);
+
+/// @returns pointer to the previous node in given list, `nullptr` if none available
+NODE *pred(List *&L, NODE *p_node);
+
+/// @returns pointer to the first node with given value, `nullptr` if none available
+NODE *find_first_of(List *&L, int key);
+
+/// @brief remove given node
+/// @returns `true` if successfully removed, `false` otherwise
+bool remove_node(List *&L, NODE *p_node);
+
+/// @returns pointer to the node with given index, `nullptr` if index is out of range
+NODE *extract_node(List *&L, int index);
+
+/// @returns index of the node, `-1` if the node is not in the list
+int extract_index(List *&L, NODE *p_node);
+
+
+/**************** Auxiliary functions ****************/
+
 // --- Define function prototypes ---
 NODE *createNode(int data);
 List *createList(NODE *p_node);
 bool addHead(List *&L, int data);
 bool addTail(List *&L, int data);
 bool removeHead(List *&L);
-void removeTail(List *&L);
+bool removeTail(List *&L);
 void removeAll(List *&L);
 void removeBefore(List *&L, int val);
 void removeAfter(List *&L, int val);
@@ -79,18 +103,36 @@ void freeList(List *L)
 NODE *createNode(int data)
 {
     // Your code here //
-    return nullptr; // Placeholder return statement
+
+    // Does not handle memory allocation failure
+    return new NODE{data, nullptr};
+
+    // return nullptr; // Placeholder return statement
 }
 
 List *createList(NODE *p_node)
 {
     // Your code here //
-    return nullptr; // Placeholder return statement
+
+    // Does not handle memory allocation failure
+    return new List(p_node, p_node);
+
+    // return nullptr; // Placeholder return statement
 }
 
 bool addHead(List *&L, int data)
 {
     // Your code here //
+
+    NODE *n = createNode(data);
+    if (n != nullptr) {
+        if (L->p_head == nullptr)
+            L->p_head = L->p_tail = n;
+        else
+            n->p_next = L->p_head, L->p_head = n;
+        return true;
+    }
+
     return false;
 }
 
@@ -113,18 +155,60 @@ bool addTail(List *&L, int data) // this function is kept for createListfromArra
 bool removeHead(List *&L)
 {
     // Your code here //
+
+    // If list is empty
+    if (L->p_head == nullptr)
+        return false;
+    
+    // If list has a single node
+    if (L->p_head == L->p_tail) {
+        free(L->p_head);
+        L->p_head = L->p_tail = nullptr;
+        return true;
+    }
+
+    // If list has more than one node
+    else {
+        NODE *nextNode = succ(L, L->p_head);
+        free(L->p_head);
+        L->p_head = nextNode;
+        return true;
+    }
+
     return false;
 }
 
-void removeTail(List *&L)
+bool removeTail(List *&L)
 {
     // Your code here //
-    return;
+
+    // If list is empty
+    if (L->p_head == nullptr)
+        return false;
+
+    // If list has a single node
+    if (L->p_head == L->p_tail) {
+        free(L->p_head);
+        L->p_head = L->p_tail = nullptr;
+        return true;
+    }
+
+    // If list has more than one node
+    else {
+        NODE *p_pred = pred(L, L->p_tail);
+        free(L->p_tail);
+        L->p_tail = p_pred;
+        L->p_tail->p_next = nullptr;
+        return true;
+    }
 }
 
 void removeAll(List *&L)
 {
     // Your code here //
+
+    while (removeHead(L));
+
     return;
 }
 
@@ -132,24 +216,53 @@ void removeAll(List *&L)
 void removeBefore(List *&L, int val)
 {
     // Your code here //
+
+    NODE *l = find_first_of(L, val);
+    NODE *k = pred(L, l);
+    remove_node(L, k);
+
     return;
 }
 
 void removeAfter(List *&L, int val)
 {
     // Your code here //
+
+    NODE *k = find_first_of(L, val);
+    NODE *l = succ(L, k);
+    remove_node(L, l);
+
     return;
 }
 
 bool addPos(List *&L, int data, int pos)
 {
     // Your code here //
-    return false;
+    
+    if (pos == 0) {
+        return addHead(L, data);
+    }
+    
+    NODE *k = extract_node(L, pos - 1);
+    NODE *l = createNode(data);
+    assert(l != nullptr);
+    if (k == nullptr)
+        return false;
+    if (k == L->p_tail)
+        L->p_tail->p_next = l, L->p_tail = l;
+    else
+        l->p_next = k->p_next, k->p_next = l;
+
+    return true;
 }
 
 void removePos(List *&L, int data, int pos)
 {
     // Your code here //
+
+    (void)data;
+    remove_node(L, extract_node(L, pos));
+
     return;
 }
 
@@ -157,43 +270,86 @@ void removePos(List *&L, int data, int pos)
 bool addBefore(List *&L, int data, int val)
 {
     // Your code here //
+
+    NODE *l = find_first_of(L, val);
+    if (l != nullptr)
+        return addPos(L, data, extract_index(L, l));
+
     return false;
 }
 
 bool addAfter(List *&L, int data, int val)
 {
     // Your code here //
+
+    NODE *l = find_first_of(L, val);
+    if (l != nullptr)
+        return addPos(L, data, extract_index(L, l) + 1);
+
     return false;
 }
 
 void printList(List *L)
 {
     // Your code here //
+
+    for (NODE *k = L->p_head; k != nullptr; k = k->p_next) {
+        if (k != L->p_head)
+            std::cout << "->";
+        std::cout << k->key;
+    }
+
     return;
 }
 
 int countElements(List *L)
 {
     // Your code here //
+
+    return extract_index(L, L->p_tail) + 1;
+
     return 0;
 }
 
 List *reverseList(List *L)
 {
     // Your code here //
-    return nullptr;
+
+    List *RL = new List();
+    for (NODE *k = L->p_head; k != nullptr; k = k->p_next)
+        addHead(RL, k->key);
+
+    return RL;
 }
 
 void removeDuplicate(List *&L)
 {
     // Your code here //
+
+    for (NODE *k = L->p_head; k != nullptr; k = k->p_next) {
+        NODE *l = find_first_of(L, k->key);
+        while (l != k) {
+            remove_node(L, l);
+            l = find_first_of(L, k->key);
+        }
+    }
+
     return;
 }
 
 bool removeElement(List *&L, int key)
 {
     // Your code here //
-    return false;
+
+    NODE *l = find_first_of(L, key);
+    bool return_value = (l != nullptr);
+
+    while (l != nullptr) {
+        remove_node(L, l);
+        l = find_first_of(L, key);
+    }
+
+    return return_value;
 }
 
 // --- Function main to test the above functions ---
@@ -624,4 +780,61 @@ int main()
     std::cout << "Passed" << std::endl;
     std::cout << "--- End running test cases ---" << std::endl;
     return 0;
+}
+
+
+NODE *succ(List *&L, NODE *p_node) {
+    (void)L;
+    return (p_node ? p_node->p_next : nullptr);
+}
+
+NODE *pred(List *&L, NODE *p_node) {
+    if (!p_node)
+        return nullptr;
+        
+    NODE *p_pred = nullptr, *p_curr = L->p_head;
+    while (p_curr != nullptr && p_curr != p_node)
+        p_pred = p_curr, p_curr = succ(L, p_curr);
+    return (p_curr == p_node ? p_pred : nullptr);
+}
+
+NODE *find_first_of(List *&L, int key) {
+    for (NODE *k = L->p_head; k != nullptr; k = k->p_next)
+        if (k->key == key)
+            return k;
+    return nullptr;
+}
+
+bool remove_node(List *&L, NODE *p_node) {
+    if (p_node == nullptr)
+        return false;
+
+    if (p_node == L->p_head)
+        return removeHead(L);
+
+    NODE *p_pred = pred(L, p_node);
+    assert(p_pred != nullptr);
+    p_pred->p_next = p_node->p_next;
+    delete p_node;
+    return true;
+}
+
+NODE *extract_node(List *&L, int index) {
+    NODE *k = L->p_head;
+    
+    while (k != nullptr && index > 0)
+        index--, k = k->p_next;
+
+    return (index == 0 ? k : nullptr);
+}
+
+int extract_index(List *&L, NODE *p_node) {
+    if (p_node == nullptr)
+        return -1;
+
+    int i = 0;
+    NODE *k;
+    for (k = L->p_head; k != nullptr && k != p_node; k = k->p_next)
+        i++;
+    return (k != nullptr && k == p_node ? i : -1);
 }
