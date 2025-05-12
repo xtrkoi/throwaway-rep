@@ -1,5 +1,5 @@
 #include <iostream>
 
 int main() {
-    int n; std::cin >> n;
+    std::cout << (-1452 * 8352) % 10000 << ' ' << (-1452 * 8352) / 10000 << '\n';
 }
