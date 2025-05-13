@@ -10,8 +10,7 @@
 /// @param last Another pointer with the same type
 /// @param val A value whose type has defined `==` operator
 /// @return The first pointer in [`first`, `last`) that points to the same element as `val`, `last` if no such element is found.
-/// @ref cplusplus.com (https://cplusplus.com/reference/algorithm/find/)
-template<class InputIterator, class T> InputIterator l_find(InputIterator first, InputIterator last, const T& val) {
+template<class Iter, class T> Iter l_find(Iter first, Iter last, const T& val) {
     while (first != last) {
         if (*first == val) 
             return first;
@@ -469,6 +468,8 @@ int main(int argc, char const *argv[]) {
         try {
             integer result = evaluate<integer>(e, to_integer);
             std::cout << result << std::endl;
+            if (_output_flag)
+                std::cerr << result << std::endl;
         } 
 
         // try {
@@ -479,11 +480,15 @@ int main(int argc, char const *argv[]) {
         catch (std::logic_error &e) {
             // thrown_error = true;
             std::cout << e.what() << std::endl;
+            if (_output_flag)
+                std::cerr << e.what() << std::endl;
         }
 
         catch (std::runtime_error &e) {
             // thrown_error = true;
             std::cout << e.what() << std::endl;
+            if (_output_flag)
+                std::cerr << e.what() << std::endl;
         }
     }
 

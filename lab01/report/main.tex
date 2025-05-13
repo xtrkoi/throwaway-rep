@@ -1,0 +1,99 @@
+\documentclass{article}
+
+\author{Tran Van Tan Khoi \\ ID: 24120010}
+\date{May 13, 2025}
+\title{Lab \#01: Large Integer Arithmetic Expression}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{graphicx}
+\usepackage{array} % tabular with fixed width
+\usepackage{parskip}
+\usepackage{tabularx}
+\usepackage{indentfirst}
+\usepackage{listings}
+
+\lstset{language=C++,keywordstyle={\bfseries \color{blue}}}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem[number within=section]{statement}{}%
+{colback=blue!5,colframe=blue!35!black,fonttitle=\bfseries}{st}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand\abstractname{Attributions and References}
+\begin{abstract}
+    \noindent
+    \begin{tabularx}{\linewidth}{ | X | X | X | X | X | X |} \hline
+        Section & \raggedright Percentage Understood & \raggedright Content Understood & \raggedright Percentage Referenced & \raggedright Content Referenced & Source \\ \hline\hline
+        \raggedright Custom `int' type & 80\% & \raggedright Constructor, operator overloading, data stream & 10\% & \raggedright Karatsuba algorithm & \href{https://en.wikipedia.org/wiki/Karatsuba_algorithm}{Wikipedia} \\ \hline
+        \raggedright Parsing expression & 100\% & Parsing simple expression & 0\% & & \\ \hline
+        \raggedright Convert to postfix & 95\% & \raggedright Using stack for conversion, precendence, parenthesis grouping & 10\% & Algorithm outline & \href{https://takeuforward.org/data-structure/infix-to-postfix/}{TakeUForward} \\ \hline
+        \raggedright Postfix evaluation & 100\% & Algorithm using stack & 0\% & & \\ \hline
+        \raggedright Exceptions handling & 90\% & C++ built-in exception handling & 10\% & Exception handling syntax & \href{https://en.cppreference.com/w/cpp/language/catch}{cppreference} \\ \hline
+        \raggedright Command-line Arguments & 0\% & argc, argv & 0\% & & \\ \hline
+    \end{tabularx}
+\end{abstract}
+
+\section{Introduction}
+\label{Introduction}
+
+The purpose of this Lab is to show an elementary but nonetheless crucial application of one of the most commonly used data structure, the stack, in evaluating basic arithmetic expressions. Not only will we dive into the rabbit hole of resolving many types of expressions, but also show the pitfalls of how we typically write expressions in infix notation. This lab leverages the previously implemented \lstinline{`stack'} class in C++ and the newly written `integer' class that handles whole numbers with nearly unlimited digits, similar to the `int' data type in Python.
+
+\section{The Problem}
+\label{problem}
+
+\begin{statement*}{Statement}{}
+    Multiple arithmetic expressions are given in infix notation on multiple lines. Each expression consists of operands which are signed integers up 100 digits long, operators `+', `-', `*', and `/' (integer division), and parenthesis to group operations. 
+
+    \indent Write a program that can evaluate these expressions and output the results on multiple lines. Display appropriate error messages for zero-division or malformed expression.
+\end{statement*}
+
+\section{The Approach}
+\label{approach}
+
+In a nutshell, there are 3 steps to evaluate expressions:
+\begin{enumerate}
+    \item \emph{Parse} the expression into symbols (operands, operators, and parenthesis)
+    \item \emph{Convert} the parsed list of symbols into \emph{postfix notation}.
+    \item \emph{Evaluate} the given expression in postfix notation.
+\end{enumerate}
+
+\subsection*{Parser Class}
+\label{parser}
+
+To design a modular system, we combine the expression parser and postfix notation converter into a single component called \emph{Expression Parser}, implemented as a class with two methods, \lstinline{parse_expression(expression)} and \lstinline{convert_to_postfix(parsed_expression)}.
+
+\lstinline{parse_expression(expression)} takes an \lstinline{std::string} object which represents the original expression and seperate it into symbols, skipping any spaces.
+
+\lstinline{convert_to_postfix(parsed_expression)}, as the name suggests, convert the list of symbols in infix ordering to postfix ordering. Create an empty stack. Traversing the list of symbols from left to right, each time we encounter a closing parenthesis, pop the top of the stack until we find the opening. If we encounter an operator instead, pop off the top of the stack until we find an operator with lower precendence or the stack is empty, then push the operator to the top of the stack. In other cases, push the symbol to the top of the stack. After traversing the list, simply pop off each item in the stack to receive the expression in postfix ordering.
+
+\subsection*{Evaluating Postfix Expression}
+
+Evaluating expressions in postfix notation is very simple by popping off the top two symbols in the stack each time we encounter an operator, calculating the result, then putting it back in. The final symbol in the stack will be the result of the expression.
+
+\section{The Caveats}
+\label{caveats}
+
+\subsection*{Large Integers}
+\label{large_integers}
+
+The operands can have up too 100 digits, exceeding the upper bound of the `long long' data type of $2^{63} - 1$. That's why a custom type is needed. For purposes of this lab only, we need to maintain a vector of digits ordered from the least significant digit to the most significant digit and a seperate variable telling the sign.
+
+\subsection*{Handling Exceptions}
+\label{handling_exceptions}
+
+Within the constraints of this lab, we also need to handle cases where division by 0 happens, or the given expression's syntax isn't correct. We can raise exceptions using C++ exceptions handling system when such cases arise.
+
+\section{Conclusion}
+\label{conclusion}
+
+The source code is available at \href{https://github.com/xtrkoi/throwaway-rep}{this Github repo}.
+
+\end{document}
