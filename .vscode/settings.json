@@ -57,6 +57,8 @@
         "iomanip": "cpp",
         "sstream": "cpp",
         "cstring": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "bitset": "cpp",
+        "regex": "cpp"
     }
 }
