@@ -88,21 +88,21 @@ bool isCompleteGraph(const std::vector<std::vector<int>> &adjMatrix) {
 
 bool isBipartite(const std::vector<std::vector<int>> &adjMatrix) {
     int n = (int)adjMatrix.size();
-    std::vector<int> layer(n);
+    std::vector<int> layer(n, -1);
     std::queue<int> q;
     for (int i = 0; i < n; i++) {
-        if (layer[i] == 0) {
-            layer[i] = 1;
+        if (layer[i] == -1) {
+            layer[i] = 0;
             q.push(i);
             while (!q.empty()) {
                 int u = q.front(); 
                 q.pop();
                 for (int v = 0; v < n; v++){
                     if (adjMatrix[u][v]) {
-                        if (layer[u] == layer[v])
+                        if (layer[u] % 2 == layer[v] % 2)
                             return false;
                         if (layer[v] == 0) {
-                            layer[v] = layer[u] + 1;
+                            layer[v] = (layer[u] + 1) % 2;
                             q.push(v);
                         }
                     }
